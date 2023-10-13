@@ -1,0 +1,21 @@
+.erp {
+    .erp-layout {
+        height: 100%;
+    }
+    .erp-form-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        padding: 12px;
+    }
+    .erp-json-form div:last-child {
+        justify-content: end;
+    }
+    .ant-pro-page-container-children-container {
+        padding-block: 0.6rem;
+        padding-inline: 1rem;
+    }
+    .erp-tab-wrapper {
+        display: flex;
+    }
+}

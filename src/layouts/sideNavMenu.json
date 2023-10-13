@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Dashboard",
+    "path": "/home/dashboard",
+    "icon": "DashboardIcon"
+  },
+  {
+    "name": "Parties",
+    "path": "/home/parties",
+    "icon": "GroupIcon"
+  },
+  {
+    "name": "Sale",
+    "path": "/home/sales",
+    "icon": "SaleIcon"
+  },
+  {
+    "name": "Purchase",
+    "path": "/home/purchase",
+    "icon": "PurschaseIcon"
+  },
+  {
+    "name": "Inventory",
+    "path": "/home/inventory",
+    "icon": "InventoryIcon"
+  },
+  {
+    "name": "Accounting",
+    "path": "/home/accounting",
+    "icon": "RupeeIcon"
+  },
+  {
+    "name": "Settings",
+    "path": "/home/settings",
+    "icon": "SettingIcon"
+  }
+]

@@ -1,0 +1,24 @@
+/* Hide the button text and mobile icon by default */
+.mobile-icon {
+  display: none;
+}
+
+/* Show the button text for desktop view */
+@media (min-width: 768px) {
+  .desktop-text {
+    display: inline-block;
+  }
+  .mobile-icon {
+    display: none;
+  }
+}
+
+/* Show the mobile icon for mobile view */
+@media (max-width: 767px) {
+  .desktop-text {
+    display: none;
+  }
+  .mobile-icon {
+    display: inline-block;
+  }
+}

@@ -1,0 +1,124 @@
+{
+    "add-supplier-details": [
+      {
+        "valueType": "divider",
+        "fieldProps": {
+          "orientation": "left",
+          "children": "Supplier Basic Details"
+        }
+      },
+      {
+        "title": "Name",
+        "dataIndex": "name",
+        "formItemProps": {
+          "rules": [
+            {
+              "required": true,
+              "message": "This field is required"
+            }
+          ]
+        },
+        "colProps": {
+          "xs": 24,
+          "md": 8
+        }
+      },
+      {
+        "title": "Phone Number",
+        "dataIndex": "phoneNumber",
+        "colProps": {
+          "xs": 24,
+          "md": 8
+        }
+      },
+      {
+        "title": "Email Address",
+        "dataIndex": "email",
+        "formItemProps": {
+          "rules": [
+            {
+              "type": "email"
+            }
+          ]
+        },
+        "colProps": {
+          "xs": 24,
+          "md": 8
+        }
+      },
+      {
+        "valueType": "divider",
+        "fieldProps": {
+          "orientation": "left",
+          "children": "GST Details"
+        }
+      },
+      {
+        "title": "GST Number",
+        "dataIndex": "gstNumber",
+        "formItemProps": {
+          "rules": [
+            {
+              "validator": "customValidator"
+            }
+          ]
+        },
+        "colProps": {
+          "xs": 24,
+          "md": 8
+        }
+      },
+      {
+        "title": "PAN Number",
+        "dataIndex": "panNumber",
+        "formItemProps": {
+          "rules": [
+            {
+              "validator": "customValidator"
+            }
+          ]
+        },
+        "colProps": {
+          "xs": 24,
+          "md": 8
+        }
+      },
+      {
+        "valueType": "divider",
+        "fieldProps": {
+          "orientation": "left",
+          "children": "Other Details"
+        }
+      },
+      {
+        "title": "Business Category",
+        "dataIndex": "businessCategory",
+        "valueType": "select",
+        "valueEnum": {
+          "all": { "text": "All", "status": "Default" },
+          "open": {
+            "text": "Unresolved",
+            "status": "Error"
+          },
+          "closed": {
+            "text": "Resolved",
+            "status": "Success",
+            "disabled": true
+          },
+          "processing": {
+            "text": "In Progress",
+            "status": "Processing"
+          }
+        },
+        "width": "md",
+        "colProps": {
+          "xs": 24,
+          "md": 8
+        }
+      },
+      {
+        "valueType": "divider"
+      }
+    ]
+  }
+  
