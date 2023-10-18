@@ -15,7 +15,7 @@ export default () => {
       }}
     >
       <ProCard split={responsive ? 'horizontal' : 'vertical'}>
-        <StatisticCard
+        {/* <StatisticCard
           colSpan={responsive ? 24 : 6}
           title="Annual Performance Target"
           statistic={{
@@ -49,7 +49,7 @@ export default () => {
               />
             </>
           }
-        />
+        /> */}
         <StatisticCard.Group
           colSpan={responsive ? 24 : 18}
           direction={responsive ? 'column' : undefined}
@@ -105,30 +105,35 @@ export default () => {
             />
           </StatisticCard>
           <StatisticCard
-            statistic={{
-              title: 'Annual Performance Revenue Ranking',
-              value: 2,
-              description: (
-                <Statistic title="Day-to-Day" value="6.47%" trend="up" />
-              ),
-            }}
-            chart={
-              <img
-                src="https://gw.alipayobjects.com/zos/alicdn/zevpN7Nv_/xiaozhexiantu.svg"
-                alt="Line Chart"
-                width="100%"
-              />
-            }
-          >
-            <Statistic
-              title="Monthly Paid Count"
-              value={601}
-              layout="vertical"
-              description={
-                <Statistic title="Day-to-Day" value="6.47%" trend="down" />
-              }
+          statistic={{
+            title: 'Paid Traffic',
+            value: 3701928,
+            description: <Statistic title="Percentage" value="61.5%" />,
+          }}
+          chart={
+            <img
+              src="https://gw.alipayobjects.com/zos/alicdn/ShNDpDTik/huan.svg"
+              alt="Percentage"
+              width="100%"
             />
-          </StatisticCard>
+          }
+          chartPlacement="left"
+        />
+        <StatisticCard
+          statistic={{
+            title: 'Free Traffic',
+            value: 1806062,
+            description: <Statistic title="Percentage" value="38.5%" />,
+          }}
+          chart={
+            <img
+              src="https://gw.alipayobjects.com/zos/alicdn/6YR18tCxJ/huanlv.svg"
+              alt="Percentage"
+              width="100%"
+            />
+          }
+          chartPlacement="left"
+        />
         </StatisticCard.Group>
       </ProCard>
     </RcResizeObserver>

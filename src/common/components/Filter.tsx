@@ -4,19 +4,19 @@ import { Button, Space, Row, Col, Input } from "antd";
 import { SearchOutlined, ReloadOutlined } from "@ant-design/icons";
 
 interface FilterProps {
-  title: string;
+  leftSection: React.ReactNode;
   onSearch: () => void;
   onReset: () => void;
 }
 
-const Filter: React.FC<FilterProps> = ({ title, onSearch, onReset }) => {
+const Filter: React.FC<FilterProps> = ({ leftSection, onSearch, onReset }) => {
   const screenSize = useScreenSize();
 
   return (
     <Row justify={{ md: "space-between" }} align="middle">
-      <Col>
-        <h3>{title}</h3>
-      </Col>
+      {screenSize === "mobile" ? null : <Col>
+        {leftSection}
+      </Col>}
       <Col>
         <Space size={8} align="baseline">
           <Input />

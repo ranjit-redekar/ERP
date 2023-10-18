@@ -18,7 +18,8 @@ import {
   EyeOutlined,
   DeleteOutlined,
   PlusOutlined,
-  MoreOutlined
+  MoreOutlined,
+  PlusCircleOutlined
 } from "@ant-design/icons";
 import ConfirmationBox from "../../common/components/ConfirmationBox";
 import Filter from "../../common/components/Filter";
@@ -135,7 +136,13 @@ const SupplierList: React.FC = () => {
           data={selectedCustomer}
         />
       ) : null}
-      <Filter title="Supplier List" onSearch={() => {}} onReset={() => {}} />
+      <div style={{ marginBottom: '12px' }} >
+        <Filter leftSection={
+          <Button type="primary" icon={<PlusCircleOutlined />} onClick={() => onActionChange(null, "Add")}>
+            Add Supplier
+          </Button>
+        } onSearch={() => { }} onReset={() => { }} />
+      </div>
       <div
         id="scrollableDiv"
         style={{
@@ -193,14 +200,14 @@ const SupplierList: React.FC = () => {
                   }}
                   placement="bottomLeft"
                 >
-                {
+                  {
                     screenSize === "mobile" ? <MoreOutlined /> :
-                  <Typography.Link>
-                    <Space>
-                      Actions
-                      <DownOutlined />
-                    </Space>
-                  </Typography.Link>
+                      <Typography.Link>
+                        <Space>
+                          Actions
+                          <DownOutlined />
+                        </Space>
+                      </Typography.Link>
                   }
                 </Dropdown>
               </List.Item>
@@ -208,14 +215,14 @@ const SupplierList: React.FC = () => {
           />
         </InfiniteScroll>
       </div>
-      <FloatButton
+      {screenSize === "mobile" ? <FloatButton
         // shape="square"
         onClick={() => onActionChange(null, "Add")}
         type="primary"
         // style={{ right: 30, bottom: 30}}
         icon={<PlusOutlined />}
         tooltip="Add new supplier"
-      />
+      /> : null}
     </>
   );
 };
