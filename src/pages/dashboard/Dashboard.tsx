@@ -3,11 +3,12 @@ import RcResizeObserver from 'rc-resize-observer';
 import { useState } from 'react';
 import { PurschaseIcon, RupeeIcon, SaleIcon } from '../../common/Icons';
 import {
-  theme,
+  theme,Col, Row , Divider
 } from "antd";
 import './Dashboard.scss';
-
-const { Statistic } = StatisticCard;
+import RecentSaleOrders from './RecentSaleOrders';
+import Filters from './Filters';
+import LowerStock from './LowerStock';
 
 export default () => {
   const [responsive, setResponsive] = useState(false);
@@ -20,7 +21,8 @@ console.log("AAAAAA", token)
         setResponsive(offset.width < 596);
       }}
     >
-      {/* <ProCard split={responsive ? 'horizontal' : 'vertical'}> */}
+      <Filters />
+      <Divider />
         <StatisticCard.Group
           colSpan={responsive ? 24 : 18}
           direction={responsive ? 'column' : undefined}
@@ -32,10 +34,8 @@ console.log("AAAAAA", token)
             statistic={{
               title: 'Sale',
               value: 1000,
-              description: <Statistic title="Percentage" value="61.5%" />,
-              icon: <SaleIcon fill="blue" />,
-              // tip:"tip"
-              valueStyle:{color: 'red' }
+              description: "description",
+              icon: <SaleIcon fill="blue" />
             }}
           />
           <StatisticCard
@@ -44,7 +44,7 @@ console.log("AAAAAA", token)
             statistic={{
               title: 'Purchase',
               value: 10000,
-              description: <Statistic title="Percentage" value="61.5%" />,
+              description: "description",
               icon:<PurschaseIcon fill="red" /> 
             }}
           />
@@ -54,12 +54,17 @@ console.log("AAAAAA", token)
             statistic={{
               title: 'Profit',
               value: 10000,
-              description: <Statistic title="Percentage" value="38.5%" />,
+              description: "description",
               icon: <RupeeIcon fill="green" />
             }}
           />
         </StatisticCard.Group>
-      {/* </ProCard> */}
+      <Divider />
+      
+      <Row gutter={[30, 0]}>
+        <Col span={18} ><RecentSaleOrders /></Col>
+        <Col span={6} ><LowerStock /></Col>
+      </Row>
     </RcResizeObserver>
   );
 };
