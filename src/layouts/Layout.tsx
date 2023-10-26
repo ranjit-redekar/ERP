@@ -58,12 +58,6 @@ const SearchInput = () => {
         placeholder="Search"
         bordered={false}
       />
-      <PlusCircleFilled
-        style={{
-          color: token.colorPrimary,
-          fontSize: 24,
-        }}
-      />
     </div>
   );
 };
