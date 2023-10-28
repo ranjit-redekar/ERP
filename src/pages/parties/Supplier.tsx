@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Drawer } from "antd";
 
 import JsonForm from "../../common/components/JsonForm";
-import jsonConfig from "../../dump/add-customer.json";
+import jsonConfig from "../../configs/add-customer.json";
 
 interface SupplierProps {
   isShow: boolean,

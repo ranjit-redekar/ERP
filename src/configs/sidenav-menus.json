@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Dashboard",
+    "path": "/home/dashboard",
+    "icon": "DashboardIcon",
+    "isShowInSettings": true,
+    "isShowInSidenav": true
+  },
+  {
+    "name": "Parties",
+    "path": "/home/parties",
+    "icon": "GroupIcon",
+    "isShowInSettings": true,
+    "isShowInSidenav": true
+  },
+  {
+    "name": "Sale",
+    "path": "/home/sales",
+    "icon": "SaleIcon",
+    "isShowInSettings": true,
+    "isShowInSidenav": true
+  },
+  {
+    "name": "Purchase",
+    "path": "/home/purchase",
+    "icon": "PurchaseIcon",
+    "isShowInSettings": true,
+    "isShowInSidenav": true
+  },
+  {
+    "name": "Inventory",
+    "path": "/home/inventory",
+    "icon": "InventoryIcon",
+    "isShowInSettings": true,
+    "isShowInSidenav": true
+  },
+  {
+    "name": "Accounting",
+    "path": "/home/accounting",
+    "icon": "RupeeIcon",
+    "isShowInSettings": true,
+    "isShowInSidenav": true
+  },
+  {
+    "name": "Settings",
+    "path": "/home/settings",
+    "icon": "SettingIcon",
+    "isShowInSettings": false,
+    "isShowInSidenav": true
+  },
+  {
+    "name": "profile",
+    "path": "/home/profile",
+    "icon": "SettingIcon",
+    "isShowInSettings": true,
+    "isShowInSidenav": false
+  }
+]

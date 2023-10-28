@@ -1,28 +1,15 @@
-import Icon from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import MenuItems from "./sideNavMenu.json";
-import { DashboardIcon, GroupIcon, InventoryIcon, PurschaseIcon, RupeeIcon, SaleIcon, SettingIcon } from "../common/Icons";
-
-const style = { fontSize:'1.3rem', fontWeight: 'bold' };
-
-const IconMap: any = {
-  DashboardIcon: <Icon style={style} component={DashboardIcon} />,
-  SettingIcon: <Icon style={style} component={SettingIcon} />,
-  SaleIcon: <Icon style={style} component={SaleIcon} />,
-  PurschaseIcon: <Icon style={style} component={PurschaseIcon} />,
-  GroupIcon: <Icon style={style} component={GroupIcon} />,
-  InventoryIcon: <Icon style={style} component={InventoryIcon} />,
-  RupeeIcon: <Icon style={style} component={RupeeIcon} />,
-};
+import MenuItems from "../configs/sidenav-menus.json";
+import { getIcon } from "../common/utils";
 
 const mapMenuItems = (item: any) => ({
   path: item.path,
   name: item?.children?.length ? item.name : <Link to={item.path}>{item.name}</Link>,
-  icon: item?.icon ? IconMap[item.icon] : null,
+  icon: item?.icon ? getIcon(item.icon) : null,
   routes: item?.children?.length ? item.children.map((_ele) => mapMenuItems(_ele)) : "",
 });
 
-const menuList = MenuItems.map((item) => (mapMenuItems(item)));
+const menuList = MenuItems.filter((item) => item?.isShowInSidenav).map((item) => (mapMenuItems(item)));
 
 export default {
   route: {

@@ -1,15 +1,16 @@
 import { Radio, Space, Tabs } from 'antd';
+import MenuItems from '../../configs/sidenav-menus.json';
+import { getIcon } from '../../common/utils';
 
 const Settings: React.FC = () => {
   return (
       <Tabs
-        tabPosition="left"
-        items={new Array(3).fill(null).map((_, i) => {
-          const id = String(i + 1);
+        // tabPosition="left"
+        items={MenuItems.filter((menu) => menu?.isShowInSettings).map((menu, i) => {
           return {
-            label: `Tab ${id}`,
-            key: id,
-            children: `Content of Tab ${id}`,
+            label: <><span>{getIcon(menu?.icon)}</span><span>{menu?.name}</span></>,
+            key: String(i + 1),
+            children: `Settings for ${menu?.name}`,
           };
         })}
       />

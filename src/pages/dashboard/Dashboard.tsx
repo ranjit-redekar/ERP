@@ -1,7 +1,7 @@
 import { StatisticCard } from '@ant-design/pro-components';
 import RcResizeObserver from 'rc-resize-observer';
 import { useState } from 'react';
-import { PurschaseIcon, RupeeIcon, SaleIcon } from '../../common/Icons';
+import { PurchaseIcon, RupeeIcon, SaleIcon } from '../../common/Icons';
 import {
   theme,Col, Row , Divider
 } from "antd";
@@ -45,7 +45,7 @@ console.log("AAAAAA", token)
               title: 'Purchase',
               value: 10000,
               description: "description",
-              icon:<PurschaseIcon fill="red" /> 
+              icon:<PurchaseIcon fill="red" /> 
             }}
           />
           <StatisticCard
