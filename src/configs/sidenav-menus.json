@@ -49,8 +49,15 @@
     "isShowInSidenav": true
   },
   {
-    "name": "profile",
+    "name": "Profile",
     "path": "/home/profile",
+    "icon": "ProfileIcon",
+    "isShowInSettings": true,
+    "isShowInSidenav": false
+  },
+  {
+    "name": "Layout",
+    "path": "/home/layout",
     "icon": "SettingIcon",
     "isShowInSettings": true,
     "isShowInSidenav": false

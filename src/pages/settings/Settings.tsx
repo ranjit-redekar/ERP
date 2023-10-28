@@ -5,7 +5,6 @@ import { getIcon } from '../../common/utils';
 const Settings: React.FC = () => {
   return (
       <Tabs
-        // tabPosition="left"
         items={MenuItems.filter((menu) => menu?.isShowInSettings).map((menu, i) => {
           return {
             label: <><span>{getIcon(menu?.icon)}</span><span>{menu?.name}</span></>,

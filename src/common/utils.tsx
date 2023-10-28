@@ -1,5 +1,5 @@
 import Icon from "@ant-design/icons";
-import { DashboardIcon, GroupIcon, InventoryIcon, PurchaseIcon, RupeeIcon, SaleIcon, SettingIcon } from "../common/Icons";
+import { DashboardIcon, GroupIcon, InventoryIcon, PurchaseIcon, RupeeIcon, SaleIcon, SettingIcon, ProfileIcon } from "../common/Icons";
 
 // Define an interface for the possible icon names
 interface IconMap {
@@ -14,6 +14,7 @@ const iconComponents: IconMap = {
     GroupIcon: GroupIcon,
     InventoryIcon: InventoryIcon,
     RupeeIcon: RupeeIcon,
+    ProfileIcon: ProfileIcon
 };
 
 const defaultStyle = { fontSize: '1.3rem', fontWeight: 'bold' };
