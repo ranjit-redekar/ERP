@@ -1,6 +1,6 @@
 import { Radio, Space, Tabs } from 'antd';
 import MenuItems from '../../configs/sidenav-menus.json';
-import { getIcon } from '../../common/utils';
+import { getIcon } from '../../common/components/Utils';
 
 const Settings: React.FC = () => {
   return (

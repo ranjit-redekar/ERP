@@ -8,37 +8,16 @@ import {
   Skeleton,
   Dropdown,
   Typography,
-  FloatButton,
 } from "antd";
 import Customer from "./Customer";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {
-  EditOutlined,
   DownOutlined,
-  EyeOutlined,
-  DeleteOutlined,
-  PlusOutlined,
   MoreOutlined,
-  PlusCircleOutlined
 } from "@ant-design/icons";
 import useScreenSize from "../../common/hooks/useScreenSize";
 import Filter from "../../common/components/Filter";
-import { showConfirm } from "../../common/components/Utils";
-
-const Actions = [
-  {
-    label: "View",
-    icon: <EyeOutlined />,
-  },
-  {
-    label: "Edit",
-    icon: <EditOutlined />,
-  },
-  {
-    label: "Delete",
-    icon: <DeleteOutlined />,
-  },
-];
+import { showConfirm, getActions } from "../../common/components/Utils";
 
 type Geo = {
   lat: string;
@@ -73,12 +52,12 @@ type User = {
 const CustomerList: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<User[]>([]);
-  const [showCustomer, setShowCustomer] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
   const [selectedAction, setSelectedAction] = useState("new");
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [selectedRowData, setSelectedListRowData] = useState(null);
   const screenSize = useScreenSize();
 
-  console.log(selectedCustomer, "selectedCustomer");
+  console.log(selectedRowData, "selectedRowData");
   const loadMoreData = () => {
     if (loading) {
       return;
@@ -97,7 +76,7 @@ const CustomerList: React.FC = () => {
 
   const onActionChange = (val: User | null, action: string) => {
     if (val) {
-      setSelectedCustomer({
+      setSelectedListRowData({
         name: val?.name,
         phoneNumber: "9876543210",
         email: val?.email,
@@ -105,16 +84,16 @@ const CustomerList: React.FC = () => {
         panNumber: "ABCDE1234F",
       });
     } else {
-      setSelectedCustomer(null);
+      setSelectedListRowData(null);
     }
     setSelectedAction(action);
     if (action === "Delete") {
       showConfirm({
-        onCancel: () => setSelectedCustomer(null),
-        onOk: () => setSelectedCustomer(null)
-      })
+        onCancel: () => setSelectedListRowData(null),
+        onOk: () => setSelectedListRowData(null),
+      });
     } else {
-      setShowCustomer(true);
+      setShowDrawer(true);
     }
     console.log(val, action);
   };
@@ -125,23 +104,24 @@ const CustomerList: React.FC = () => {
   console.log(data, "data");
   return (
     <>
-      {showCustomer ? (
+      {showDrawer ? (
         <Customer
-          isShow={showCustomer}
+          isShow={showDrawer}
           selectedAction={selectedAction}
           onDrawerClose={() => {
-            setSelectedCustomer(null);
-            setShowCustomer(false);
+            setSelectedListRowData(null);
+            setShowDrawer(false);
           }}
-          data={selectedCustomer}
+          data={selectedRowData}
         />
       ) : null}
-      <div style={{ marginBottom: '12px' }} >
-        <Filter leftSection={
-          <Button type="primary" icon={<PlusCircleOutlined />} onClick={() => onActionChange(null, "Add")}>
-            Add Customer
-          </Button>
-        } onSearch={() => { }} onReset={() => { }} />
+      <div style={{ marginBottom: "12px" }}>
+        <Filter
+          addButtonLabel="Add Customer"
+          onAdd={() => onActionChange(null, "Add")}
+          onSearch={() => {}}
+          onPressEnter={() => {}}
+        />
       </div>
       <div
         id="scrollableDiv"
@@ -182,7 +162,7 @@ const CustomerList: React.FC = () => {
                 />
                 <Dropdown
                   menu={{
-                    items: Actions.map((action, i) => ({
+                    items: getActions().map((action, i) => ({
                       key: i + 1,
                       label: (
                         <Button
@@ -198,29 +178,22 @@ const CustomerList: React.FC = () => {
                   }}
                   placement="bottomLeft"
                 >
-                  {
-                    screenSize === "mobile" ? <MoreOutlined /> :
-                      <Typography.Link>
-                        <Space>
-                          Actions
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                  }
+                  {screenSize === "mobile" ? (
+                    <MoreOutlined />
+                  ) : (
+                    <Typography.Link>
+                      <Space>
+                        Actions
+                        <DownOutlined />
+                      </Space>
+                    </Typography.Link>
+                  )}
                 </Dropdown>
               </List.Item>
             )}
           />
         </InfiniteScroll>
       </div>
-      {screenSize === "mobile" ? <FloatButton
-        // shape="square"
-        onClick={() => onActionChange(null, "Add")}
-        type="primary"
-        // style={{ right: 30, bottom: 30}}
-        icon={<PlusOutlined />}
-        tooltip="Add new customer"
-      /> : null}
     </>
   );
 };

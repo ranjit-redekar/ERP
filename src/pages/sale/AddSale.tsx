@@ -72,7 +72,7 @@ const renderItem = (title: string, count: number) => ({
     <div
       style={{
         display: "flex",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
       }}
     >
       {title}
@@ -80,29 +80,31 @@ const renderItem = (title: string, count: number) => ({
         <UserOutlined /> {count}
       </span>
     </div>
-  )
+  ),
 });
 
 const options = [
   {
     label: renderTitle("Libraries"),
-    options: [renderItem("AntDesign", 10000), renderItem("AntDesign UI", 10600)]
+    options: [
+      renderItem("AntDesign", 10000),
+      renderItem("AntDesign UI", 10600),
+    ],
   },
   {
     label: renderTitle("Solutions"),
     options: [
       renderItem("AntDesign UI FAQ", 60100),
-      renderItem("AntDesign FAQ", 30010)
-    ]
+      renderItem("AntDesign FAQ", 30010),
+    ],
   },
   {
     label: renderTitle("Articles"),
-    options: [renderItem("AntDesign design language", 100000)]
-  }
+    options: [renderItem("AntDesign design language", 100000)],
+  },
 ];
 
-
-export default ({ isShow, onDrawerClose, selectedAction = "Add" }) => {
+export default () => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
   const [showConfirmation, setShowConfiramation] = useState(false);
@@ -112,13 +114,15 @@ export default ({ isShow, onDrawerClose, selectedAction = "Add" }) => {
       title: "Product name",
       dataIndex: "title",
       render: () => {
-        return (<AutoComplete
-        popupClassName="certain-category-search-dropdown"
-        popupMatchSelectWidth={400}
-        options={options}
-      >
-        <Input placeholder="input here" />
-      </AutoComplete>)
+        return (
+          <AutoComplete
+            popupClassName="certain-category-search-dropdown"
+            popupMatchSelectWidth={400}
+            options={options}
+          >
+            <Input placeholder="input here" />
+          </AutoComplete>
+        );
       },
       width: "25%",
     },
@@ -197,51 +201,53 @@ export default ({ isShow, onDrawerClose, selectedAction = "Add" }) => {
 
   return (
     <>
-      <Drawer
-      title={`${selectedAction} Sale Record`}
-      placement="right"
-      onClose={onDrawerClose}
-      open={isShow}
-      size="large"
-      maskClosable={false}
-      bodyStyle={{ paddingTop: "4px" }}
-      // rootStyle={{}}
-      contentWrapperStyle={{ width: "unset" }}
-    >
-      <EditableProTable<DataSourceType>
-        rowKey="id"
-        // headerTitle="Editable Table"
-        maxLength={5}
-        scroll={{
-          x: 960,
-        }}
-        recordCreatorProps={{
-          position: "bottom",
-          record: () => ({ id: (Math.random() * 1000000).toFixed(0) }),
-        }}
-        loading={false}
-        columns={columns}
-        request={async () => ({
-          data: defaultData,
-          total: 3,
-          success: true,
-        })}
-        value={dataSource}
-        onChange={setDataSource}
-        editable={{
-          type: "multiple",
-          editableKeys,
-          deletePopconfirmMessage: "Do you Want to delete this item?",
-          onSave: async (rowKey, data, row) => {
-            console.log(rowKey, data, row);
-            await waitTime(2000);
-          },
-          onlyOneLineEditorAlertMessage:<>Delete this line?</>, 
-          onlyAddOneLineAlertMessage: <>Please add data for the current line fields</>,
-          onChange: setEditableRowKeys,
-        }}
-      />
-    </Drawer>
+      {/* <Drawer
+        title={`${selectedAction} Sale Record`}
+        placement="right"
+        onClose={onDrawerClose}
+        open={isShow}
+        size="large"
+        maskClosable={false}
+        bodyStyle={{ paddingTop: "4px" }}
+        // rootStyle={{}}
+        contentWrapperStyle={{ width: "unset" }}
+      > */}
+        <EditableProTable<DataSourceType>
+          rowKey="id"
+          // headerTitle="Editable Table"
+          maxLength={5}
+          scroll={{
+            x: 960,
+          }}
+          recordCreatorProps={{
+            position: "bottom",
+            record: () => ({ id: (Math.random() * 1000000).toFixed(0) }),
+          }}
+          loading={false}
+          columns={columns}
+          request={async () => ({
+            data: defaultData,
+            total: 3,
+            success: true,
+          })}
+          value={dataSource}
+          onChange={setDataSource}
+          editable={{
+            type: "multiple",
+            editableKeys,
+            deletePopconfirmMessage: "Do you Want to delete this item?",
+            onSave: async (rowKey, data, row) => {
+              console.log(rowKey, data, row);
+              await waitTime(2000);
+            },
+            onlyOneLineEditorAlertMessage: <>Delete this line?</>,
+            onlyAddOneLineAlertMessage: (
+              <>Please add data for the current line fields</>
+            ),
+            onChange: setEditableRowKeys,
+          }}
+        />
+      {/* </Drawer> */}
     </>
   );
 };

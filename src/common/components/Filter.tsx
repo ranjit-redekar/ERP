@@ -1,32 +1,51 @@
 import React from "react";
 import useScreenSize from "../hooks/useScreenSize";
-import { Button, Space, Row, Col, Input } from "antd";
-import { SearchOutlined, ReloadOutlined } from "@ant-design/icons";
+import { Button, Row, Col, Input, FloatButton } from "antd";
+import { PlusOutlined, PlusCircleOutlined } from "@ant-design/icons";
+
+const { Search } = Input;
 
 interface FilterProps {
-  leftSection: React.ReactNode;
+  addButtonLabel: String;
   onSearch: () => void;
-  onReset: () => void;
+  onPressEnter: () => void;
+  onAdd: () => void;
 }
 
-const Filter: React.FC<FilterProps> = ({ leftSection, onSearch, onReset }) => {
+const Filter: React.FC<FilterProps> = ({
+  addButtonLabel,
+  onSearch,
+  onPressEnter,
+  onAdd,
+}) => {
   const screenSize = useScreenSize();
 
   return (
     <Row justify={{ md: "space-between" }} align="middle">
-      {screenSize === "mobile" ? null : <Col>
-        {leftSection}
-      </Col>}
+      {screenSize === "mobile" ? (
+        <FloatButton
+          onClick={onAdd}
+          type="primary"
+          // style={{ right: 30, bottom: 30}}
+          icon={<PlusOutlined />}
+          tooltip={addButtonLabel}
+        />
+      ) : (
+        <Col>
+          <Button type="primary" icon={<PlusCircleOutlined />} onClick={onAdd}>
+            {addButtonLabel}
+          </Button>
+        </Col>
+      )}
       <Col>
-        <Space size={8} align="baseline">
-          <Input />
-          <Button type="primary" icon={<SearchOutlined />} onClick={onSearch}>
-            {screenSize === "mobile" ? null : "Search"}
-          </Button>
-          <Button icon={<ReloadOutlined />} onClick={onReset}>
-            {screenSize === "mobile" ? null : "Reset"}
-          </Button>
-        </Space>
+        <Search
+          enterButton={screenSize === "mobile" ? true : "Search"}
+          onPressEnter={onPressEnter}
+          placeholder="Search"
+          allowClear
+          onSearch={onSearch}
+          // size="large"
+        />
       </Col>
     </Row>
   );

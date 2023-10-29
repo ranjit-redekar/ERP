@@ -1,36 +1,61 @@
-import React, { useState } from 'react';
-import { Space, Table, FloatButton, Row, Col, Button, Input } from 'antd';
-import { columns, data } from './SaleListTableColumn';
+import React, { useState } from "react";
+import { Space, Table, FloatButton, Row, Col, Button, Input } from "antd";
+import { columns, data } from "./SaleListTableColumn";
 import { useNavigate } from "react-router-dom";
 import {
-    DoubleRightOutlined,
-    PlusOutlined,
-    ReloadOutlined,
-    PlusCircleOutlined,
-    SearchOutlined
-  } from "@ant-design/icons";
-import AddSale from './AddSale';
-import useScreenSize from '../../common/hooks/useScreenSize';
+  PlusOutlined,
+  ReloadOutlined,
+  PlusCircleOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
+import AddSale from "./AddSale";
+import PageList from "../../common/components/ListPage";
 
 const SaleList: React.FC = () => {
-    const [showDrawer, setShowDrawer] = useState(false);
-    const screenSize = useScreenSize();
-    return <>
-        {showDrawer ? <AddSale isShow={showDrawer} onDrawerClose={() => setShowDrawer(false) } /> : null }
-        <Row style={{ marginBlock: '0.8rem' }} justify={{lg: "space-between"}}>
-            {screenSize === "mobile" ? null : <Col><Button type="primary" onClick={() => setShowDrawer(true)} icon={<PlusCircleOutlined />} >New Sale Order</Button></Col>}
-            <Col> <Space size={4} align="baseline" > <Input /> <Button type="primary" icon={<SearchOutlined />}>Search</Button> <Button icon={<ReloadOutlined />}>Reset</Button> </Space> </Col>
-        </Row>
-        <Table columns={columns} dataSource={data} />
-        {screenSize === "mobile" ? <FloatButton
-        // shape="square"
-        onClick={() => setShowDrawer(true)}
-        type="primary"
-        // style={{ right: 30, bottom: 30}}
-        icon={<PlusOutlined />}
-        tooltip="New sale order"
-      /> : null}
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [selectedAction, setSelectedAction] = useState("new");
+  const [selectedRowData, setSelectedListRowData] = useState(null);
+
+  const drawerProps = {
+    onDrawerClose: () => {
+      console.log("Drawer closed");
+      setShowDrawer(false)
+    },
+    drawerTitle: "Dummy Drawer Title",
+    drawerContent: <AddSale />,
+    show: showDrawer,
+  };
+
+  const filterProps = {
+    addButtonLabel: "New Sale Order",
+    onActionChange: (val, action) => {
+      console.log("Add button clicked", val, action);
+      setSelectedListRowData(val);
+      setShowDrawer(true)
+    },
+    onSearch: (value) => {
+      console.log(`Search button clicked with value: ${value}`);
+    },
+    onPressEnter: (value) => {
+      console.log(`Enter key pressed with value: ${value}`);
+    },
+  };
+
+  const listProps = {
+    listType: "table",
+    columns: columns, // Define your dummy columns as needed
+    data: data, // Define your dummy data as needed
+  };
+
+  return (
+    <>
+      <PageList
+        drawerProps={drawerProps}
+        filterProps={filterProps}
+        listProps={listProps}
+      />
     </>
+  );
 };
 
 export default SaleList;

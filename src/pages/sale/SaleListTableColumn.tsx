@@ -63,11 +63,14 @@ const columns: ColumnsType<DataType> = [
     {
         title: 'Action',
         key: 'action',
-        render: (_, record) => (
-            <Space size="middle">
-                <Dropdown menu={{items}} ><MoreOutlined /></Dropdown>
-            </Space>
-        ),
+        // render: (_, record) => {
+        //     console.log(record, "AAAAAAA BB- record")
+        //             console.log(_, "AAAAAAA BB - _")
+        //     return (
+        //     <Space size="middle">
+        //         <Dropdown menu={{items, onClick: () => console.log("console")}} ><MoreOutlined /></Dropdown>
+        //     </Space>
+        // )},
     },
 ];
 const data: DataType[] = [

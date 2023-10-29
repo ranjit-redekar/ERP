@@ -8,38 +8,16 @@ import {
   Skeleton,
   Dropdown,
   Typography,
-  FloatButton,
 } from "antd";
 import Customer from "./Customer";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {
-  EditOutlined,
   DownOutlined,
-  EyeOutlined,
-  DeleteOutlined,
-  PlusOutlined,
   MoreOutlined,
-  PlusCircleOutlined
 } from "@ant-design/icons";
-import ConfirmationBox from "../../common/components/ConfirmationBox";
 import Filter from "../../common/components/Filter";
 import useScreenSize from "../../common/hooks/useScreenSize";
-import { showConfirm } from "../../common/components/Utils";
-
-const Actions = [
-  {
-    label: "View",
-    icon: <EyeOutlined />,
-  },
-  {
-    label: "Edit",
-    icon: <EditOutlined />,
-  },
-  {
-    label: "Delete",
-    icon: <DeleteOutlined />,
-  },
-];
+import { showConfirm, getActions } from "../../common/components/Utils";
 
 type Geo = {
   lat: string;
@@ -111,8 +89,8 @@ const SupplierList: React.FC = () => {
     if (action === "Delete") {
       showConfirm({
         onCancel: () => setSelectedCustomer(null),
-        onOk: () => setSelectedCustomer(null)
-      })
+        onOk: () => setSelectedCustomer(null),
+      });
     } else {
       setShowCustomer(true);
     }
@@ -136,12 +114,13 @@ const SupplierList: React.FC = () => {
           data={selectedCustomer}
         />
       ) : null}
-      <div style={{ marginBottom: '12px' }} >
-        <Filter leftSection={
-          <Button type="primary" icon={<PlusCircleOutlined />} onClick={() => onActionChange(null, "Add")}>
-            Add Supplier
-          </Button>
-        } onSearch={() => { }} onReset={() => { }} />
+      <div style={{ marginBottom: "12px" }}>
+        <Filter
+          addButtonLabel="Add Supplier"
+          onAdd={() => onActionChange(null, "Add")}
+          onSearch={() => {}}
+          onPressEnter={() => {}}
+        />
       </div>
       <div
         id="scrollableDiv"
@@ -184,7 +163,7 @@ const SupplierList: React.FC = () => {
                 />
                 <Dropdown
                   menu={{
-                    items: Actions.map((action, i) => ({
+                    items: getActions().map((action, i) => ({
                       key: i + 1,
                       label: (
                         <Button
@@ -200,29 +179,22 @@ const SupplierList: React.FC = () => {
                   }}
                   placement="bottomLeft"
                 >
-                  {
-                    screenSize === "mobile" ? <MoreOutlined /> :
-                      <Typography.Link>
-                        <Space>
-                          Actions
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                  }
+                  {screenSize === "mobile" ? (
+                    <MoreOutlined />
+                  ) : (
+                    <Typography.Link>
+                      <Space>
+                        Actions
+                        <DownOutlined />
+                      </Space>
+                    </Typography.Link>
+                  )}
                 </Dropdown>
               </List.Item>
             )}
           />
         </InfiniteScroll>
       </div>
-      {screenSize === "mobile" ? <FloatButton
-        // shape="square"
-        onClick={() => onActionChange(null, "Add")}
-        type="primary"
-        // style={{ right: 30, bottom: 30}}
-        icon={<PlusOutlined />}
-        tooltip="Add new supplier"
-      /> : null}
     </>
   );
 };

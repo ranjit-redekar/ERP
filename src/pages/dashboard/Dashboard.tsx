@@ -61,9 +61,9 @@ console.log("AAAAAA", token)
         </StatisticCard.Group>
       <Divider />
       
-      <Row gutter={[30, 0]}>
-        <Col span={18} ><RecentSaleOrders /></Col>
-        <Col span={6} ><LowerStock /></Col>
+      <Row gutter={[30, 30]}>
+        <Col md={18} sm={24} ><RecentSaleOrders /></Col>
+        <Col md={6} sm={24} ><LowerStock /></Col>
       </Row>
     </RcResizeObserver>
   );

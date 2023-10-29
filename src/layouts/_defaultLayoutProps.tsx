@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import MenuItems from "../configs/sidenav-menus.json";
-import { getIcon } from "../common/utils";
+import { getIcon } from "../common/components/Utils";
 
 const mapMenuItems = (item: any) => ({
   path: item.path,
