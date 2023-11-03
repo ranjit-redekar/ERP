@@ -1,57 +1,64 @@
-import React, { FC, useState } from "react";
-import { BetaSchemaForm } from "@ant-design/pro-components";
+import React, { FC, useState, useEffect, Children } from "react";
+import { BetaSchemaForm, ProForm } from "@ant-design/pro-components";
 import type { ProFormColumnsType } from "@ant-design/pro-components";
 import { isValidGST, isValidPan } from "../validators";
 import { Button } from "antd";
+
 interface JsonFormProps {
-  config: Object<any>;
+  config: ProFormColumnsType[];
+  initialValues: Object;
+  isDisabled: boolean;
+  isShow: boolean;
+  title: string,
+  layoutType: string; 
+  onFormChange?: (values: Object) => void; // Add a callback for form changes
+  onClose?:(values: Object) => void;
+  children: React.ReactNode
 }
 
 type DataItem = {
   name: string;
   state: string;
+  other_details: string; // Add other_details to the DataItem type
 };
 
-const getColumns: Object[] = (config: Object[]) => {
-  return config.map((ele) => {
-    if (
-      ele?.formItemProps?.rules.length &&
-      ele?.formItemProps?.rules.filter((e) => e.validator === "isValidGST")
-        .length
-    ) {
-      return {
-        ...ele,
-        formItemProps: {
-          rules: [
-            { validator: (_: any, val: string) => val && isValidGST(_, val) },
-          ],
-        },
-      };
-    } else if (
-      ele?.formItemProps?.rules.length &&
-      ele?.formItemProps?.rules.filter((e) => e.validator === "isValidPan")
-        .length
-    ) {
-      return {
-        ...ele,
-        formItemProps: {
-          rules: [
-            { validator: (_: any, val: string) => val && isValidPan(_, val) },
-          ],
-        },
-      };
-    }
-    return ele;
-  });
+const getUpdatedColumn = (column: ProFormColumnsType): ProFormColumnsType => {
+  if (column.formItemProps?.rules?.some((rule) => rule.validator === "isValidGST")) {
+    return {
+      ...column,
+      formItemProps: {
+        ...column.formItemProps,
+        rules: [{ validator: (_, val: string) => val && isValidGST(_, val) }],
+      },
+    };
+  } else if (column.formItemProps?.rules?.some((rule) => rule.validator === "isValidPan")) {
+    return {
+      ...column,
+      formItemProps: {
+        ...column.formItemProps,
+        rules: [{ validator: (_, val: string) => val && isValidPan(_, val) }],
+      },
+    };
+  } else if (column.valueType === "group") {
+    return {
+      ...column,
+      columns: column.columns?.map(getUpdatedColumn),
+    };
+  }
+  return column;
 };
 
-const JsonForm: FC<any> = ({ config, initialValues= undefined, isDisabled }) => {
-  // const [open, setOpen] = useState(isShow);
-  // console.log(config, 'configconfig')
+const JsonForm: FC<JsonFormProps> = ({ config, initialValues = {}, isDisabled, onFormChange, title, isShow, onClose, layoutType = "DrawerForm", children }) => {
+  const updatedColumns = config.map(getUpdatedColumn);
+  console.log(updatedColumns, "updatedColumns");
   return (
+    <>
     <BetaSchemaForm<DataItem>
-      layoutType="Form"
+      layoutType={layoutType}
       disabled={isDisabled}
+      open={isShow}
+      title={title}
+      onOpenChange={(val) => !val && onClose()}
       initialValues={initialValues}
       className="erp-json-form"
       colProps={{
@@ -59,32 +66,30 @@ const JsonForm: FC<any> = ({ config, initialValues= undefined, isDisabled }) => 
       }}
       grid={true}
       onFinish={async (values) => {
-        console.log(values, 'onFinish');
+        console.log(values, "onFinish");
       }}
       onReset={() => {
         console.log("AAAAAAAA = onReset");
       }}
+      onValuesChange={onFormChange} // Add an onValuesChange event handler
       submitter={{
         render: (props, doms) => {
           console.log(props);
-          return [
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap:'0.8rem' }} >
-              <Button key="rest" onClick={() => props.form?.resetFields()}>
+          return (
+            <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.8rem" }}>
+              {/* <Button key="rest" onClick={() => props.form?.resetFields()}>
                 Reset
-              </Button>
-              <Button
-                type="primary"
-                key="submit"
-                onClick={() => props.form?.submit?.()}
-              >
+              </Button> */}
+              <Button type="primary" key="submit" onClick={() => props.form?.submit?.()}>
                 Save
               </Button>
-            </div>,
-          ];
+            </div>
+          );
         },
       }}
-      columns={config}
+      columns={updatedColumns}
     />
+    </>
   );
 };
 

@@ -2,12 +2,6 @@ import React, { useState } from "react";
 import { Space, Table, FloatButton, Row, Col, Button, Input } from "antd";
 import { columns, data } from "./SaleListTableColumn";
 import { useNavigate } from "react-router-dom";
-import {
-  PlusOutlined,
-  ReloadOutlined,
-  PlusCircleOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
 import AddSale from "./AddSale";
 import PageList from "../../common/components/ListPage";
 
@@ -21,7 +15,7 @@ const SaleList: React.FC = () => {
       console.log("Drawer closed");
       setShowDrawer(false)
     },
-    drawerTitle: "Dummy Drawer Title",
+    drawerTitle: `${selectedAction.charAt(0).toUpperCase() + selectedAction.slice(1)} Sale`,
     drawerContent: <AddSale />,
     show: showDrawer,
   };

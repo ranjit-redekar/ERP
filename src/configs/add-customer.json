@@ -1,16 +1,29 @@
 {
   "add-customer": [
     {
-      "valueType": "divider",
-      "fieldProps": {
-        "orientation": "left",
-        "children": "Customer Basic Details"
+      "title": "Customer Type",
+      "dataIndex": "customer_type",
+      "valueType": "select",
+      "valueEnum": [
+        { "text": "Business", "value": "business", "default": true },
+        { "text": "Individual", "value": "individual" }
+      ],
+      "width": "md",
+      "colProps": {
+        "xs": 24,
+        "md": 12
       }
     },
     {
-      "title": "Name",
-      "dataIndex": "name",
-      "tooltip": "this is <br> new \n line",
+      "valueType": "divider",
+      "fieldProps": {
+        "orientation": "left",
+        "children": "Primary Contact Details"
+      }
+    },
+    {
+      "title": "First Name",
+      "dataIndex": "first_name",
       "formItemProps": {
         "rules": [
           {
@@ -21,7 +34,30 @@
       },
       "colProps": {
         "xs": 24,
-        "md": 8
+        "md": 12
+      }
+    },
+    {
+      "title": "Last Name",
+      "dataIndex": "last_name",
+      "formItemProps": {
+        "rules": [
+          {
+            "required": true,
+            "message": "This field is required"
+          }
+        ]
+      },
+      "colProps": {
+        "xs": 24,
+        "md": 12
+      }
+    },
+    {
+      "title": "Company Name",
+      "dataIndex": "company_name",
+      "colProps": {
+        "xs": 24
       }
     },
     {
@@ -29,7 +65,7 @@
       "dataIndex": "phoneNumber",
       "colProps": {
         "xs": 24,
-        "md": 8
+        "md": 12
       }
     },
     {
@@ -44,21 +80,21 @@
       },
       "colProps": {
         "xs": 24,
-        "md": 8
+        "md": 12
       }
     },
     {
       "valueType": "divider",
       "fieldProps": {
         "orientation": "left",
-        "children": "GST Details"
+        "children": "Other Details"
       }
     },
     {
       "title": "GST Number",
       "dataIndex": "gstNumber",
       "placeholder": "27ABCDE1234F1Z5",
-      "tooltip" : "27ABCDE1234F1Z5 State Code: 27 (Each state in India has a unique state code.) PAN: ABCDE1234F (The PAN of the business entity.) Entity Code: 1 (To differentiate between multiple entities using the same PAN.) Checksum Digit: Z (Used for error detection.) Default Checksum: 5 (Used for error detection.)",
+      "tooltip": "27ABCDE1234F1Z5 State Code: 27 (Each state in India has a unique state code.) PAN: ABCDE1234F (The PAN of the business entity.) Entity Code: 1 (To differentiate between multiple entities using the same PAN.) Checksum Digit: Z (Used for error detection.) Default Checksum: 5 (Used for error detection.)",
       "formItemProps": {
         "rules": [
           {
@@ -68,7 +104,7 @@
       },
       "colProps": {
         "xs": 24,
-        "md": 8
+        "md": 12
       }
     },
     {
@@ -83,44 +119,24 @@
       },
       "colProps": {
         "xs": 24,
-        "md": 8
+        "md": 12
       }
     },
     {
-      "valueType": "divider",
-      "fieldProps": {
-        "orientation": "left",
-        "children": "Other Details"
-      }
-    },
-    {
-      "title": "Business Category",
-      "dataIndex": "businessCategory",
-      "valueType": "select",
-      "valueEnum": {
-        "all": { "text": "All", "status": "Default" },
-        "open": {
-          "text": "Unresolved",
-          "status": "Error"
-        },
-        "closed": {
-          "text": "Resolved",
-          "status": "Success",
-          "disabled": true
-        },
-        "processing": {
-          "text": "In Progress",
-          "status": "Processing"
-        }
-      },
-      "width": "md",
+      "title": "Opening Balance",
+      "dataIndex": "opening_balance",
       "colProps": {
         "xs": 24,
-        "md": 8
+        "md": 12
       }
     },
     {
-      "valueType": "divider"
+      "title": "Address",
+      "dataIndex": "address",
+      "colProps": {
+        "xs": 24,
+        "md": 12
+      }
     }
   ]
 }

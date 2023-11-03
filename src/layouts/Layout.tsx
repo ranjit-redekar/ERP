@@ -85,12 +85,12 @@ export default () => {
         overflow: "auto",
       }}
     >
-      <ProConfigProvider hashed={false}>
-        <ConfigProvider
-          getTargetContainer={() => {
-            return document.getElementById("test-pro-layout") || document.body;
-          }}
-        >
+      {/* <ProConfigProvider hashed={false}> */}
+        {/* <ConfigProvider
+          // getTargetContainer={() => {
+          //   return document.getElementById("test-pro-layout") || document.body;
+          // }}
+        > */}
           <ProLayout
             {...defaultLayoutProps}
             location={{
@@ -172,8 +172,8 @@ export default () => {
               disableUrlParams={false}
             />
           </ProLayout>
-        </ConfigProvider>
-      </ProConfigProvider>
+        {/* </ConfigProvider> */}
+      {/* </ProConfigProvider> */}
     </div>
   );
 };

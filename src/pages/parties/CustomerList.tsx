@@ -104,17 +104,16 @@ const CustomerList: React.FC = () => {
   console.log(data, "data");
   return (
     <>
-      {showDrawer ? (
-        <Customer
+      <Customer
           isShow={showDrawer}
           selectedAction={selectedAction}
           onDrawerClose={() => {
+            console.log("AAAAAA onDrawerClose", showDrawer)
             setSelectedListRowData(null);
             setShowDrawer(false);
           }}
           data={selectedRowData}
-        />
-      ) : null}
+      />
       <div style={{ marginBottom: "12px" }}>
         <Filter
           addButtonLabel="Add Customer"

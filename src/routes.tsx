@@ -8,6 +8,8 @@ import SaleList from "./pages/sale/SaleList";
 import InventoryList from "./pages/inventory/InventoryList";
 import PurchaseList from "./pages/purchase/PurchaseList";
 import Parties from "./pages/parties/Parties";
+import CustomerList from "./pages/parties/CustomerList";
+import SupplierList from "./pages/parties/SupplierLIst";
 
 const error404 = {
     path: "*",
@@ -16,7 +18,7 @@ const error404 = {
   
   const router = createBrowserRouter([
     {
-      path: "home",
+      path: "app",
       element: <Layout />,
       children: [
         {
@@ -28,19 +30,27 @@ const error404 = {
           Component: Dashboard
         },
         {
-          path: 'parties',
-          Component: Parties
-        },
-        {
-          path: 'sales',
+          path: 'sales/sales-orders',
           element: <SaleList />,
         },
         {
-          path: 'purchase',
+          path: 'sales/customers',
+          element: <CustomerList />,
+        },
+        {
+          path: 'purchases/purchases-orders',
           Component: PurchaseList
         },
         {
-          path: 'inventory',
+          path: 'purchases/suppliers',
+          element: <SupplierList />,
+        },
+        {
+          path: 'inventory/products',
+          element: <InventoryList />,
+        },
+        {
+          path: 'inventory/stock',
           element: <InventoryList />,
         },
         {

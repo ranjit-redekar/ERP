@@ -1,34 +1,166 @@
-import React, { FC, useState, useRef, useEffect } from "react";
-import { Drawer } from "antd";
+import React from "react";
+import { Button, Divider, Tabs } from "antd";
+import {
+  DrawerForm,
+  ProForm,
+  ProFormSelect,
+  ProFormText,
+} from "@ant-design/pro-form";
+import { isValidGST, isValidPan } from "../../common/validators";
 
-import JsonForm from "../../common/components/JsonForm";
-import jsonConfig from "../../configs/add-customer.json";
+const CustomerForm = ({ isShow, onDrawerClose, selectedAction }) => {
+  const onChange = (key: string) => {
+    console.log(key);
+  };
 
-interface CustomerProps {
-  isShow: boolean,
-  onDrawerClose: () => void, 
-  data: [], 
-  selectedAction: String
-}
-
-const Customer:FC<CustomerProps> = ({ isShow, onDrawerClose, data, selectedAction }) => {
   return (
-    <Drawer
-      title={`${selectedAction} Customer`}
-      placement="right"
-      onClose={onDrawerClose}
+    <DrawerForm
+      onFinish={(values) => {
+        console.log("onSubmit");
+        // onSubmit(values);
+      }}
+      width="751px"
       open={isShow}
-      size="large"
-      maskClosable={false}
-      bodyStyle={{ paddingTop: "4px" }}
+      title={`${selectedAction} Customer`}
+      onOpenChange={(val) => !val && onDrawerClose()}
+      // drawerProps={{
+      //   footer: 
+      // }}
     >
-      <JsonForm
-        initialValues={data}
-        config={jsonConfig["add-customer"]}
-        isDisabled={selectedAction.toLocaleLowerCase() === "view"}
+      <ProForm.Group>
+        <ProFormSelect
+          width="md"
+          name="customer_type"
+          label="Customer Type"
+          valueEnum={{
+            business: "Business",
+            individual: "Individual",
+          }}
+          initialValue="business"
+        />
+      </ProForm.Group>
+
+      <ProForm.Group>
+        <ProFormText
+          name="first_name"
+          label="First Name"
+          width="md"
+          rules={[{ required: true, message: "This field is required" }]}
+        />
+
+        <ProFormText
+          name="last_name"
+          label="Last Name"
+          width="md"
+          rules={[{ required: true, message: "This field is required" }]}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText width="md" name="company_name" label="Company Name" />
+      </ProForm.Group>
+
+      <ProForm.Group>
+        <ProFormText width="md" name="phoneNumber" label="Phone Number" />
+        <ProFormText
+          width="md"
+          name="email"
+          label="Email Address"
+          rules={[{ type: "email", message: "Invalid email address" }]}
+        />
+      </ProForm.Group>
+
+      <Tabs
+        defaultActiveKey="1"
+        type="card"
+        items={[
+          {
+            key: "1",
+            label: "Payment Details",
+            children: (
+              <>
+                <ProForm.Group>
+                  <ProFormText
+                    width="md"
+                    name="gstNumber"
+                    label="GST Number"
+                    tooltip={`27ABCDE1234F1Z5 State Code: 27 (Each state in India has a unique state code.) 
+                      \n PAN: ABCDE1234F (The PAN of the business entity.) 
+                      \n Entity Code: 1 (To differentiate between multiple entities using the same PAN.)
+                      \n Checksum Digit: Z (Used for error detection.) 
+                      \n Default Checksum: 5 (Used for error detection.)`}
+                    rules={[
+                      {
+                        validator: isValidGST,
+                      },
+                    ]}
+                    placeholder="27ABCDE1234F1Z5"
+                  />
+
+                  <ProFormText
+                    width="md"
+                    name="panNumber"
+                    label="PAN Number"
+                    rules={[
+                      {
+                        validator: isValidPan,
+                      },
+                    ]}
+                  />
+                </ProForm.Group>
+                <ProForm.Group>
+                  <ProFormText
+                    width="md"
+                    name="opening_balance"
+                    label="Opening Balance"
+                  />
+                </ProForm.Group>
+              </>
+            ),
+          },
+          {
+            key: "2",
+            label: "Address Details",
+            children: (
+              <Tabs defaultActiveKey="1" type="card" items={[
+                {
+                  key: 'billing_address',
+                  label: "Billing Address",
+                  children: (
+                    <>
+                      {/* <ProForm.Group> */}
+                        <ProFormText name="address_1" label="Area, Street, Sector or Village" />
+                      {/* </ProForm.Group> */}
+                      <ProForm.Group>
+                        <ProFormText width="md" name="landmark" label="Landmark" />
+                        <ProFormText width="md" name="pincode" label="Pincode" />
+                      </ProForm.Group>
+                      <ProForm.Group>
+                        <ProFormSelect width="md" name="city" label="City" />
+                        <ProFormSelect width="md" name="state" label="State" />
+                      </ProForm.Group>
+                    </>
+                  )
+                },
+                {
+                  key: 'shipping_address',
+                  label: "Shipping Address",
+                  children: (
+                    <ProFormText width="md" name="address_1" label="Area, Street, Sector or Village" />
+                  )
+                }
+              ]}  />
+            ),
+          },
+          {
+            key: "3",
+            label: "Other Details",
+            children: "Content of Tab Pane 3",
+          },
+        ]}
+        onChange={onChange}
       />
-    </Drawer>
+    </DrawerForm>
   );
 };
 
-export default Customer;
+export default CustomerForm;

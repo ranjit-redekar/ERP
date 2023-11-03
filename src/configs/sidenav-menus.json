@@ -1,63 +1,101 @@
 [
   {
     "name": "Dashboard",
-    "path": "/home/dashboard",
+    "path": "/app/dashboard",
     "icon": "DashboardIcon",
     "isShowInSettings": true,
     "isShowInSidenav": true
   },
   {
-    "name": "Parties",
-    "path": "/home/parties",
-    "icon": "GroupIcon",
-    "isShowInSettings": true,
-    "isShowInSidenav": true
-  },
-  {
-    "name": "Sale",
-    "path": "/home/sales",
+    "name": "Sales",
+    "path": "/app/sales",
     "icon": "SaleIcon",
     "isShowInSettings": true,
-    "isShowInSidenav": true
+    "isShowInSidenav": true,
+    "children": [
+      {
+        "name": "Customers",
+        "path": "/app/sales/customers",
+        "icon": "GroupIcon",
+        "isShowInSidenav": true
+      },
+      {
+        "name": "Sales Orders",
+        "path": "/app/sales/sales-orders",
+        "icon": "SaleIcon",
+        "isShowInSettings": true,
+        "isShowInSidenav": true
+      }  
+    ]
   },
   {
-    "name": "Purchase",
-    "path": "/home/purchase",
+    "name": "Purchases",
+    "path": "/app/purchases",
     "icon": "PurchaseIcon",
     "isShowInSettings": true,
-    "isShowInSidenav": true
+    "isShowInSidenav": true,
+    "children": [
+      {
+        "name": "Suppliers",
+        "path": "/app/purchases/suppliers",
+        "icon": "GroupIcon",
+        "isShowInSidenav": true
+      },
+      {
+        "name": "Purchases Orders",
+        "path": "/app/purchases/purchases-orders",
+        "icon": "SaleIcon",
+        "isShowInSettings": true,
+        "isShowInSidenav": true
+      }  
+    ]
   },
   {
     "name": "Inventory",
-    "path": "/home/inventory",
+    "path": "/app/inventory",
     "icon": "InventoryIcon",
     "isShowInSettings": true,
-    "isShowInSidenav": true
+    "isShowInSidenav": true,
+    "children": [
+      {
+        "name": "Products",
+        "path": "/app/inventory/products",
+        "icon": "SaleIcon",
+        "isShowInSettings": true,
+        "isShowInSidenav": true
+      },
+      {
+        "name": "Inventory Stocks",
+        "path": "/app/inventory/stock",
+        "icon": "GroupIcon",
+        "isShowInSidenav": true
+      }  
+    ]
   },
   {
     "name": "Accounting",
-    "path": "/home/accounting",
+    "path": "/app/accounting",
     "icon": "RupeeIcon",
     "isShowInSettings": true,
     "isShowInSidenav": true
   },
   {
     "name": "Settings",
-    "path": "/home/settings",
+    "path": "/app/settings",
     "icon": "SettingIcon",
     "isShowInSettings": false,
     "isShowInSidenav": true
   },
   {
     "name": "Profile",
-    "path": "/home/profile",
+    "path": "/app/profile",
     "icon": "ProfileIcon",
     "isShowInSettings": true,
     "isShowInSidenav": false
   },
   {
     "name": "Layout",
-    "path": "/home/layout",
+    "path": "/app/layout",
     "icon": "SettingIcon",
     "isShowInSettings": true,
     "isShowInSidenav": false
