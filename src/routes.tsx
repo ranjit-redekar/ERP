@@ -10,6 +10,7 @@ import PurchaseList from "./pages/purchase/PurchaseList";
 import Parties from "./pages/parties/Parties";
 import CustomerList from "./pages/parties/CustomerList";
 import SupplierList from "./pages/parties/SupplierLIst";
+import Login from "./pages/Login/Login";
 
 const error404 = {
     path: "*",
@@ -18,7 +19,7 @@ const error404 = {
   
   const router = createBrowserRouter([
     {
-      path: "app",
+      path: "app/",
       element: <Layout />,
       children: [
         {
@@ -63,6 +64,10 @@ const error404 = {
         },
         {...error404}
       ],
+    },
+    {
+      path: "login",
+      element: <Login />
     },
     {...error404}
   ]);
