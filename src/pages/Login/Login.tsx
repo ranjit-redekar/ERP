@@ -63,7 +63,7 @@ export default () => {
                   size: "large",
                   prefix: <UserOutlined className={"prefixIcon"} />,
                 }}
-                placeholder={"Username: admin or user"}
+                placeholder={"Username"}
                 rules={[
                   {
                     required: true,
@@ -77,7 +77,7 @@ export default () => {
                   size: "large",
                   prefix: <LockOutlined className={"prefixIcon"} />,
                 }}
-                placeholder={"Password: ant.design"}
+                placeholder={"Password"}
                 rules={[
                   {
                     required: true,
