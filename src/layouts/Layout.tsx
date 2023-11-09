@@ -22,9 +22,10 @@ import {
   theme,
 } from "antd";
 import defaultLayoutProps from "./_defaultLayoutProps";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import MenuFooter from "./MenuFooter";
 import HeaderTitle from "./HeaderTitle";
+import { useNavigate } from 'react-router-dom';
 
 const SearchInput = () => {
   const { token } = theme.useToken();
@@ -73,6 +74,7 @@ export default () => {
   console.log(token, "token");
   const [pathname, setPathname] = useState("/");
   const [num] = useState(20);
+  const navigate = useNavigate();
 
   if (typeof document === "undefined") {
     return <div />;
@@ -85,12 +87,6 @@ export default () => {
         overflow: "auto",
       }}
     >
-      {/* <ProConfigProvider hashed={false}> */}
-        {/* <ConfigProvider
-          // getTargetContainer={() => {
-          //   return document.getElementById("test-pro-layout") || document.body;
-          // }}
-        > */}
           <ProLayout
             {...defaultLayoutProps}
             location={{
@@ -108,7 +104,7 @@ export default () => {
                         {
                           key: "logout",
                           icon: <LogoutOutlined />,
-                          label: "logout",
+                          label: <div onClick={() => navigate('/login')} >Logout</div>,
                         },
                       ],
                     }}

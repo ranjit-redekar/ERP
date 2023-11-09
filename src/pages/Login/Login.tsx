@@ -1,39 +1,44 @@
 import {
-  AlipayCircleOutlined,
   LockOutlined,
-  MobileOutlined,
-  TaobaoCircleOutlined,
   UserOutlined,
-  WeiboCircleOutlined,
 } from "@ant-design/icons";
 import {
   LoginForm,
   ProConfigProvider,
-  ProFormCaptcha,
-  ProFormCheckbox,
   ProFormText,
-  setAlpha,
 } from "@ant-design/pro-components";
-import { Button, Tabs, message, theme } from "antd";
+import { Button, message, theme } from "antd";
 import type { CSSProperties } from "react";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import NikeLogo, { GmailIcon } from "../../common/Icons";
-
-type LoginType = "phone" | "account";
 
 export default () => {
   const { token } = theme.useToken();
-  const [loginType, setLoginType] = useState<LoginType>("account");
+  const navigate = useNavigate()
+  const onLogin = (obj : any) => {
+    if (obj?.username === 'admin' && obj?.password === 'admin') {
+        localStorage.setItem('isERPLoggedIn', 'true');
+        navigate('/app', { replace: true });
+    } else {
+        localStorage.setItem('isERPLoggedIn', 'false');
+    }
+  }
 
   return (
     <ProConfigProvider hashed={false}>
       <div style={{ backgroundColor: token.colorBgContainer }}>
         <LoginForm
+        onFinish={onLogin}
           logo={<NikeLogo />}
           title="Company Name"
           subTitle="Company tagline"
           actions={
-            <Button size="large" block onClick={() => console.log("Login with GMAIL")} >
+            <Button
+              size="large"
+              block
+              onClick={() => console.log("Login with GMAIL")}
+            >
               <div
                 style={{
                   display: "flex",
@@ -47,96 +52,37 @@ export default () => {
             </Button>
           }
         >
-          {/* <Tabs
-            centered
-            activeKey={loginType}
-            onChange={(activeKey) => setLoginType(activeKey as LoginType)}
-          >
-            <Tabs.TabPane key={"account"} tab={"Account Password Login"} />
-            <Tabs.TabPane key={"phone"} tab={"Phone Number Login"} />
-          </Tabs> */}
-          {loginType === "account" && (
-            <>
-              <ProFormText
-                name="username"
-                fieldProps={{
-                  size: "large",
-                  prefix: <UserOutlined className={"prefixIcon"} />,
-                }}
-                placeholder={"Username"}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter your username!",
-                  },
-                ]}
-              />
-              <ProFormText.Password
-                name="password"
-                fieldProps={{
-                  size: "large",
-                  prefix: <LockOutlined className={"prefixIcon"} />,
-                }}
-                placeholder={"Password"}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter your password!",
-                  },
-                ]}
-              />
-            </>
-          )}
-          {/* {loginType === "phone" && (
-            <>
-              <ProFormText
-                fieldProps={{
-                  size: "large",
-                  prefix: <MobileOutlined className={"prefixIcon"} />,
-                }}
-                name="mobile"
-                placeholder={"Phone Number"}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter your phone number!",
-                  },
-                  {
-                    pattern: /^1\d{10}$/,
-                    message: "Invalid phone number format!",
-                  },
-                ]}
-              />
-              <ProFormCaptcha
-                fieldProps={{
-                  size: "large",
-                  prefix: <LockOutlined className={"prefixIcon"} />,
-                }}
-                captchaProps={{
-                  size: "large",
-                }}
-                placeholder={"Enter the verification code"}
-                captchaTextRender={(timing, count) => {
-                  if (timing) {
-                    return `${count} ${"Get Verification Code"}`;
-                  }
-                  return "Get Verification Code";
-                }}
-                name="captcha"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter the verification code!",
-                  },
-                ]}
-                onGetCaptcha={async () => {
-                  message.success(
-                    "Verification code sent successfully! The code is: 1234"
-                  );
-                }}
-              />
-            </>
-          )} */}
+          <>
+            <ProFormText
+              name="username"
+              fieldProps={{
+                size: "large",
+                prefix: <UserOutlined className={"prefixIcon"} />,
+              }}
+              placeholder={"Username"}
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your username!",
+                },
+              ]}
+            />
+            <ProFormText.Password
+              name="password"
+              fieldProps={{
+                size: "large",
+                prefix: <LockOutlined className={"prefixIcon"} />,
+              }}
+              placeholder={"Password"}
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your password!",
+                },
+              ]}
+            />
+          </>
+
           <div
             style={{
               marginBlockEnd: 24,
