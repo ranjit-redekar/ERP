@@ -20,7 +20,7 @@ const Supplier: FC<SupplierProps> = ({ isShow, onDrawerClose, data, selectedActi
       open={isShow}
       size="large"
       maskClosable={false}
-      bodyStyle={{ paddingTop: "4px" }}
+      // bodyStyle={{ paddingTop: "4px" }}
     >
       <JsonForm
         initialValues={data}

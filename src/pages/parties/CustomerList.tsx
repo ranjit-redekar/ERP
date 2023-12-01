@@ -8,13 +8,13 @@ import {
   Skeleton,
   Dropdown,
   Typography,
+  Row,
+  Col,
 } from "antd";
+import { MailOutlined } from "@ant-design/icons";
 import Customer from "./Customer";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {
-  DownOutlined,
-  MoreOutlined,
-} from "@ant-design/icons";
+import { DownOutlined, MoreOutlined, PhoneOutlined } from "@ant-design/icons";
 import useScreenSize from "../../common/hooks/useScreenSize";
 import Filter from "../../common/components/Filter";
 import { showConfirm, getActions } from "../../common/components/Utils";
@@ -105,14 +105,14 @@ const CustomerList: React.FC = () => {
   return (
     <>
       <Customer
-          isShow={showDrawer}
-          selectedAction={selectedAction}
-          onDrawerClose={() => {
-            console.log("AAAAAA onDrawerClose", showDrawer)
-            setSelectedListRowData(null);
-            setShowDrawer(false);
-          }}
-          data={selectedRowData}
+        isShow={showDrawer}
+        selectedAction={selectedAction}
+        onDrawerClose={() => {
+          console.log("AAAAAA onDrawerClose", showDrawer);
+          setSelectedListRowData(null);
+          setShowDrawer(false);
+        }}
+        data={selectedRowData}
       />
       <div style={{ marginBottom: "12px" }}>
         <Filter
@@ -157,37 +157,67 @@ const CustomerList: React.FC = () => {
                       {item.name}
                     </a>
                   }
-                  description={item.email}
+                  description={
+                    <>
+                      <Row>{`Company Name - ${item.company?.name}`}</Row>
+                      <Row>
+                        <Col sm={24} md={12}>
+                          <MailOutlined />
+                          {` - ${item.email}`}
+                        </Col>
+                        <Col sm={24} md={12}>
+                          <PhoneOutlined rotate={90} />
+                          {` - ${item.phone}`}
+                        </Col>
+                      </Row>
+                    </>
+                  }
                 />
-                <Dropdown
-                  menu={{
-                    items: getActions().map((action, i) => ({
-                      key: i + 1,
-                      label: (
-                        <Button
-                          type="link"
-                          icon={action.icon}
-                          danger={action.label === "Delete" ? true : false}
-                          onClick={() => onActionChange(item, action.label)}
-                        >
-                          {action.label}
-                        </Button>
-                      ),
-                    })),
-                  }}
-                  placement="bottomLeft"
-                >
-                  {screenSize === "mobile" ? (
-                    <MoreOutlined />
-                  ) : (
-                    <Typography.Link>
-                      <Space>
-                        Actions
-                        <DownOutlined />
-                      </Space>
-                    </Typography.Link>
-                  )}
-                </Dropdown>
+                <div>
+
+                  { screenSize === "mobile" 
+                   ? 
+                   <Dropdown
+                   menu={{
+                     items: getActions().map((action, i) => ({
+                       key: i + 1,
+                       label: (
+                         <Button
+                           type="link"
+                           icon={action.icon}
+                           danger={action.label === "Delete" ? true : false}
+                           onClick={() => onActionChange(item, action.label)}
+                         >
+                           {action.label}
+                         </Button>
+                       ),
+                     })),
+                   }}
+                   placement="bottomLeft"
+                 >
+                     <MoreOutlined />
+                 </Dropdown> 
+                   : <Dropdown.Button
+                    menu={{
+                      items: getActions().map((action, i) => ({
+                        key: i + 1,
+                        label: (
+                          <Button
+                            type="link"
+                            icon={action.icon}
+                            danger={action.label === "Delete" ? true : false}
+                            onClick={() => onActionChange(item, action.label)}
+                          >
+                            {action.label}
+                          </Button>
+                        ),
+                      })),
+                    }}
+                    placement="bottomLeft"
+                  >
+                    View
+                  </Dropdown.Button>}
+                </div>
               </List.Item>
             )}
           />

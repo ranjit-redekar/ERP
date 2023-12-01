@@ -10,7 +10,7 @@ const mapMenuItems = (item: any) => ({
 });
 
 const menuList = MenuItems.filter((item) => item?.isShowInSidenav).map((item) => (mapMenuItems(item)));
-
+console.log(menuList, 'AAAAAAAAA-------menuList')
 export default {
   route: {
     path: "/",

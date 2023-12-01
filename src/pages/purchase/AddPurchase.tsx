@@ -15,6 +15,49 @@ const waitTime = (time: number = 100) => {
   });
 };
 
+const defaultData: PurchaseOrderItem[] = [
+  {
+    id: '1',
+    product: 'Laptop',
+    description: '15 inch, 8GB RAM',
+    quantity: 10,
+    unitPrice: 750,
+    discount: 5,
+    tax: 10,
+    totalPrice: 0,
+  },
+  {
+    id: '2',
+    product: 'Monitor',
+    description: '24 inch LED',
+    quantity: 15,
+    unitPrice: 150,
+    discount: 7,
+    tax: 8,
+    totalPrice: 0,
+  },
+  // ... other items
+];
+
+
+function formatNumberAsINRCurrency(amount: number) {
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+  }).format(amount);
+}
+
+interface PurchaseOrderItem {
+  id: string;
+  product: string;
+  description: string;
+  quantity: number;
+  unitPrice: number;
+  discount: number; // Discount in percentage
+  tax: number; // Tax in percentage
+  totalPrice: number;
+}
+
 type DataSourceType = {
   id: React.Key;
   title?: string;
@@ -25,27 +68,6 @@ type DataSourceType = {
   update_at?: number;
   children?: DataSourceType[];
 };
-
-const defaultData: DataSourceType[] = [
-  {
-    id: 624748504,
-    title: "Activity Name One",
-    readonly: "Activity Name One",
-    decs: "This activity is really fun",
-    state: "open",
-    created_at: 1590486176000,
-    update_at: 1590486176000,
-  },
-  {
-    id: 624691229,
-    title: "Activity Name Two",
-    readonly: "Activity Name Two",
-    decs: "This activity is really fun",
-    state: "closed",
-    created_at: 1590481162000,
-    update_at: 1590481162000,
-  },
-];
 
 const renderTitle = (title: string) => (
   <span>
@@ -96,77 +118,62 @@ const options = [
   }
 ];
 
+interface PurchaseOrderProps {
+  isShow: boolean;
+  onDrawerClose: () => void;
+  selectedAction: string;
+}
 
-export default ({ isShow, onDrawerClose, selectedAction = "Add" }) => {
+
+const PurchaseOrder: React.FC<PurchaseOrderProps> =  ({ isShow, onDrawerClose, selectedAction = "Add" }) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
-  const [showConfirmation, setShowConfiramation] = useState(false);
 
-  const columns: ProColumns<DataSourceType>[] = [
+  const columns: ProColumns<PurchaseOrderItem>[] = [
     {
-      title: "Product name",
-      dataIndex: "title",
-      render: () => {
-        return (<AutoComplete
-        popupClassName="certain-category-search-dropdown"
-        popupMatchSelectWidth={400}
-        options={options}
-      >
-        <Input placeholder="input here" />
-      </AutoComplete>)
-      },
-      width: "25%",
+      title: 'Product',
+      dataIndex: 'product',
+    },
+    // {
+    //   title: 'Description',
+    //   dataIndex: 'description',
+    // },
+    {
+      title: 'Quantity',
+      dataIndex: 'quantity',
     },
     {
-      title: "Activity Name Two",
-      dataIndex: "readonly",
-      tooltip: "Read-only, can be obtained using form.getFieldValue",
-      readonly: true,
-      width: "15%",
+      title: 'Unit Price',
+      dataIndex: 'unitPrice',
+      render: (text: number) => formatNumberAsINRCurrency(text),
     },
     {
-      title: "Status",
-      key: "state",
-      dataIndex: "state",
-      valueType: "select",
-      valueEnum: {
-        all: { text: "All", status: "Default" },
-        open: {
-          text: "Unresolved",
-          status: "Error",
-        },
-        closed: {
-          text: "Resolved",
-          status: "Success",
-        },
-      },
+      title: 'Discount (%)',
+      dataIndex: 'discount',
+      valueType: 'percent',
     },
     {
-      title: "Description",
-      dataIndex: "decs",
-      fieldProps: (form, { rowKey, rowIndex }) => {
-        if (form.getFieldValue([rowKey || "", "title"]) === "Not fun") {
-          return {
-            disabled: true,
-          };
-        }
-        if (rowIndex > 9) {
-          return {
-            disabled: true,
-          };
-        }
-        return {};
+      title: 'Tax (%)',
+      dataIndex: 'tax',
+      valueType: 'percent',
+    },
+    {
+      title: 'Total Price',
+      dataIndex: 'totalPrice',
+      valueType: 'money',
+      render: (_, record) => {
+        const discountAmount = record.unitPrice * record.quantity * (record.discount / 100);
+        const taxAmount = (record.unitPrice * record.quantity - discountAmount) * (record.tax / 100);
+        const totalPrice = record.unitPrice * record.quantity - discountAmount + taxAmount;
+        // Set the totalPrice back to the dataSource if needed
+        // This is not the best practice. You might want to handle it inside an effect or a callback.
+        // record.totalPrice = totalPrice;
+        return formatNumberAsINRCurrency(totalPrice);
       },
     },
     {
-      title: "Activity Time",
-      dataIndex: "created_at",
-      valueType: "date",
-    },
-    {
-      title: "Action",
-      valueType: "option",
-      width: 200,
+      title: 'Action',
+      valueType: 'option',
       render: (text, record, _, action) => [
         <a
           key="editable"
@@ -178,16 +185,16 @@ export default ({ isShow, onDrawerClose, selectedAction = "Add" }) => {
         </a>,
         <a
           key="delete"
-          onClick={(e) => {
+          onClick={() => {
             showConfirm();
-            // Modal.confirm({  });
-            // setDataSource(dataSource.filter((item) => item.id !== record.id));
+            setDataSource(dataSource.filter((item) => item.id !== record.id));
           }}
         >
           Delete
         </a>,
+        // Add more actions here
       ],
-    },
+    }
   ];
 
   return (
@@ -199,11 +206,40 @@ export default ({ isShow, onDrawerClose, selectedAction = "Add" }) => {
       open={isShow}
       size="large"
       maskClosable={false}
-      bodyStyle={{ paddingTop: "4px" }}
-      // rootStyle={{}}
       contentWrapperStyle={{ width: "unset" }}
     >
       <EditableProTable<DataSourceType>
+        rowKey="id"
+        // headerTitle="Editable Table"
+        maxLength={5}
+        scroll={{ x: 960 }}
+        recordCreatorProps={{
+                position: 'bottom',
+                record: () => ({ id: (Math.random() * 1000000).toFixed(0) })
+        }}
+        loading={false}
+        columns={columns}
+        request={async () => ({
+          data: defaultData,
+          total: 3,
+          success: true,
+        })}
+        value={dataSource}
+        onChange={setDataSource}
+        editable={{
+          type: "multiple",
+          editableKeys,
+          deletePopconfirmMessage: "Do you Want to delete this item?",
+          onSave: async (rowKey, data, row) => {
+            console.log(rowKey, data, row);
+            await waitTime(2000);
+          },
+          onlyOneLineEditorAlertMessage:<>Delete this line?</>, 
+          onlyAddOneLineAlertMessage: <>Please add data for the current item</>,
+          onChange: setEditableRowKeys,
+        }}
+      />
+      {/* <EditableProTable<DataSourceType>
         rowKey="id"
         // headerTitle="Editable Table"
         maxLength={5}
@@ -235,8 +271,10 @@ export default ({ isShow, onDrawerClose, selectedAction = "Add" }) => {
           onlyAddOneLineAlertMessage: <>Please add data for the current line fields</>,
           onChange: setEditableRowKeys,
         }}
-      />
+      /> */}
     </Drawer>
     </>
   );
 };
+
+export default PurchaseOrder;

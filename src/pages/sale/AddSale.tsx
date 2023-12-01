@@ -201,17 +201,6 @@ export default () => {
 
   return (
     <>
-      {/* <Drawer
-        title={`${selectedAction} Sale Record`}
-        placement="right"
-        onClose={onDrawerClose}
-        open={isShow}
-        size="large"
-        maskClosable={false}
-        bodyStyle={{ paddingTop: "4px" }}
-        // rootStyle={{}}
-        contentWrapperStyle={{ width: "unset" }}
-      > */}
         <EditableProTable<DataSourceType>
           rowKey="id"
           // headerTitle="Editable Table"
@@ -247,7 +236,6 @@ export default () => {
             onChange: setEditableRowKeys,
           }}
         />
-      {/* </Drawer> */}
     </>
   );
 };

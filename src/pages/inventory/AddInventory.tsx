@@ -20,7 +20,7 @@ const Customer:FC<CustomerProps> = ({ isShow, onDrawerClose, data=null, selected
       open={isShow}
       size="large"
       maskClosable={false}
-      bodyStyle={{ paddingTop: "4px" }}
+      // bodyStyle={{ paddingTop: "4px" }}
     >
       <JsonForm
         initialValues={data}

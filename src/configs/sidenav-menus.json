@@ -30,24 +30,31 @@
   },
   {
     "name": "Purchases",
-    "path": "/app/purchases",
+    "path": "/app/purchase",
     "icon": "PurchaseIcon",
     "isShowInSettings": true,
     "isShowInSidenav": true,
     "children": [
       {
         "name": "Suppliers",
-        "path": "/app/purchases/suppliers",
+        "path": "/app/purchase/suppliers",
         "icon": "GroupIcon",
         "isShowInSidenav": true
       },
       {
-        "name": "Purchases Orders",
-        "path": "/app/purchases/purchases-orders",
+        "name": "Purchase Orders",
+        "path": "/app/purchase/orders",
         "icon": "SaleIcon",
         "isShowInSettings": true,
         "isShowInSidenav": true
-      }  
+      },
+      {
+        "name": "Purchase Invoice",
+        "path": "/app/purchase/invoice",
+        "icon": "SaleIcon",
+        "isShowInSettings": true,
+        "isShowInSidenav": true
+      }
     ]
   },
   {

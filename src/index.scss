@@ -18,6 +18,9 @@
     .erp-tab-wrapper {
         display: flex;
     }
+    .ant-message {
+        z-index: 9999; /* Or any value higher than your drawer's z-index */
+    }
 }
 .ant-drawer-body {
     padding-top: 16px !important;

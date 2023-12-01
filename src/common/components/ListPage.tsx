@@ -109,7 +109,7 @@ const PageList: React.FC<PageListProps> = ({
         open={show}
         size="large"
         maskClosable={false}
-        bodyStyle={{ paddingTop: "4px" }}
+        // bodyStyle={{ paddingTop: "4px" }}
         contentWrapperStyle={{ width: "unset" }}
       >
         {drawerContent}

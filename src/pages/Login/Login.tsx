@@ -1,35 +1,43 @@
-import {
-  LockOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import {
   LoginForm,
   ProConfigProvider,
   ProFormText,
 } from "@ant-design/pro-components";
-import { Button, message, theme } from "antd";
+import { Button, message, theme, Spin } from "antd";
 import type { CSSProperties } from "react";
-import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import NikeLogo, { GmailIcon } from "../../common/Icons";
 
 export default () => {
   const { token } = theme.useToken();
-  const navigate = useNavigate()
-  const onLogin = (obj : any) => {
-    if (obj?.username === 'admin' && obj?.password === 'admin') {
-        localStorage.setItem('isERPLoggedIn', 'true');
-        navigate('/app', { replace: true });
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    isLoggedIn && navigate("/app", { replace: true });
+  }, [isLoggedIn]);
+
+  const onLogin = (obj: any) => {
+    setLoading(true)
+    if (obj?.username === "admin" && obj?.password === "admin") {
+      localStorage.setItem("isERPLoggedIn", "true");
+      setTimeout(() => {
+        setIsLoggedIn(true);
+        setLoading(false);
+      }, 5000);
     } else {
-        localStorage.setItem('isERPLoggedIn', 'false');
+      localStorage.setItem("isERPLoggedIn", "false");
     }
-  }
+  };
 
   return (
-    <ProConfigProvider hashed={false}>
+    <Spin spinning={loading}>
       <div style={{ backgroundColor: token.colorBgContainer }}>
         <LoginForm
-        onFinish={onLogin}
+          onFinish={onLogin}
           logo={<NikeLogo />}
           title="Company Name"
           subTitle="Company tagline"
@@ -99,6 +107,6 @@ export default () => {
           </div>
         </LoginForm>
       </div>
-    </ProConfigProvider>
+    </Spin>
   );
 };

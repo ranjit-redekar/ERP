@@ -130,7 +130,7 @@ export default () => {
             menuItemRender={(item, dom) => (
               <div
                 onClick={() => {
-                  setPathname(item.path || "/home/dashboard");
+                  setPathname(item.path || "/app/dashboard");
                 }}
               >
                 {dom}
@@ -154,7 +154,7 @@ export default () => {
                 <Outlet />
               </Card>
             </PageContainer>
-            <SettingDrawer
+            {/* <SettingDrawer
               pathname={pathname}
               enableDarkTheme
               getContainer={(e: any) => {
@@ -166,7 +166,7 @@ export default () => {
                 setSetting(changeSetting);
               }}
               disableUrlParams={false}
-            />
+            /> */}
           </ProLayout>
         {/* </ConfigProvider> */}
       {/* </ProConfigProvider> */}
