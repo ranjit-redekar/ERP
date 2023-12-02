@@ -8,13 +8,11 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import useScreenSize from "../../common/hooks/useScreenSize";
-import PurchaseOrder from "./PurchaseOrder";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const PurchaseList: React.FC = () => {
-  const [showDrawer, setShowDrawer] = useState(false);
   const screenSize = useScreenSize();
-	const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <>
       <Row style={{ marginBlock: "0.8rem" }} justify={{ lg: "space-between" }}>
@@ -22,8 +20,7 @@ const PurchaseList: React.FC = () => {
           <Col>
             <Button
               type="primary"
-            //   onClick={() => setShowDrawer(true)}
-              onClick={() => navigate('new')}
+              onClick={() => navigate("new")}
               icon={<PlusCircleOutlined />}
             >
               New Purchase Order
@@ -45,7 +42,7 @@ const PurchaseList: React.FC = () => {
       <Table columns={columns} dataSource={data} />
       {screenSize === "mobile" ? (
         <FloatButton
-          onClick={() => setShowDrawer(true)}
+          onClick={() => navigate("new")}
           type="primary"
           icon={<PlusOutlined />}
           tooltip="New purchase order"

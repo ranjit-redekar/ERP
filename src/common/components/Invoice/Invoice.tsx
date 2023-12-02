@@ -5,6 +5,7 @@ import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
 import EditableCell from "./EditableCell";
 import EditableRow from "./EditableRow";
 import { EditableContext } from "./contexts";
+import InvoiceHeader from "./InvoiceHeader";
 
 const { Option } = Select;
 
@@ -139,6 +140,7 @@ const Invoice: React.FC = () => {
 
   return (
     <EditableContext.Provider value={form}>
+    <InvoiceHeader />
       <ProTable
         components={{
           body: {
