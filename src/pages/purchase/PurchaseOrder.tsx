@@ -4,12 +4,12 @@ import {
   ProForm,
   ProFormText,
   ProFormSelect,
-  ProFormDatePicker,
-  PageHeader,
+  ProFormDatePicker
 } from "@ant-design/pro-components";
 import { SettingOutlined, PlusOutlined } from "@ant-design/icons";
 import PurchaseInvoice from "./PurchaseInvoice";
 import { waitTime } from "../../common/utils"; // Assuming these are in a utils file
+import Invoice from "../../common/components/Invoice/Invoice";
 
 // Mock function for fetching suppliers - replace with actual API call
 const fetchSuppliers = async (keyWords = "") => {
@@ -35,7 +35,6 @@ const PurchaseOrder: React.FC<PurchaseOrderProps> = () => {
   return (
     <>
       <div style={{ margin: "0 16px" }}>
-        {/* <PageHeader sub="New Purchase Order" /> */}
         <ProForm layout="vertical" grid={true} submitter={false}>
           <ProFormSelect
             colProps={{ md: 12, xl: 6 }}
@@ -60,7 +59,6 @@ const PurchaseOrder: React.FC<PurchaseOrderProps> = () => {
                         type="dashed"
                         block
                         icon={<PlusOutlined />}
-                        // onClick={handleAddSupplier}
                       >
                         Add Supplier
                       </Button>
@@ -94,22 +92,30 @@ const PurchaseOrder: React.FC<PurchaseOrderProps> = () => {
             label="Date"
             name="created_date"
           />
+          <ProFormText
+            colProps={{ md: 12, xl: 6 }}
+            name="email"
+            label="Email Id"
+            // fieldProps={{
+            //   disabled: true
+            // }}
+          />
+          <ProFormText
+            colProps={{ md: 12, xl: 6 }}
+            name="phone"
+            label="Phone"
+            // fieldProps={{
+            //   disabled: true
+            // }}
+          />
           <ProFormDatePicker
             colProps={{ md: 12, xl: 4 }}
             label="Expire Date"
             name="expire_date"
           />
         </ProForm>
-        <div style={{ marginBottom: "16px" }}>
-          <Collapse
-            size="small"
-            items={[
-              { key: "1", label: "Supplier Details", children: <p>ABCD</p> },
-            ]}
-          />
-        </div>
       </div>
-      <PurchaseInvoice />
+      <Invoice />
     </>
   );
 };

@@ -29,6 +29,19 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ element, fallback = "/login
   return authenticated ? element ? element : <Navigate to="/app" replace /> : <Navigate to={fallback} replace />;
 }
 
+const purchaseRoutes = [
+  { path: 'purchase/orders', element: <PurchaseList /> },
+  { path: 'purchase/orders/new', element: <PurchaseOrder /> },
+  { path: 'purchase/suppliers', element: <SupplierList /> },
+  { path: 'purchase/invoice', element: <PurchaseInvoice /> },
+  { path: 'purchase/invoice/new', element: <PurchaseInvoice /> },
+];
+
+const saleRoutes = [
+  { path: 'sales/sales-orders', element: <SaleList /> },
+  { path: 'sales/customers', element: <CustomerList /> },
+];
+
 const protectedRoutes = [
   {
     path: 'app/',
@@ -36,17 +49,12 @@ const protectedRoutes = [
     children: [
       { index: true, element: <Navigate to="dashboard" replace /> },
       { path: 'dashboard', element: <Dashboard /> },
-      { path: 'sales/sales-orders', element: <SaleList /> },
-      { path: 'sales/customers', element: <CustomerList /> },
-      { path: 'purchase/orders', element: <PurchaseList /> },
-      { path: 'purchase/orders/new', element: <PurchaseOrder /> },
-      { path: 'purchase/suppliers', element: <SupplierList /> },
-      { path: 'purchase/invoice', element: <PurchaseInvoice /> },
-      { path: 'purchase/invoice/new', element: <PurchaseInvoice /> },
       { path: 'inventory/products', element: <InventoryList /> },
       { path: 'inventory/stock', element: <InventoryList /> },
       { path: 'accounting', element: <Accounting /> },
       { path: 'settings', element: <Settings /> },
+      ...purchaseRoutes,
+      ...saleRoutes
     ],
   },
 ];
